@@ -5,7 +5,7 @@ export interface DataItem {
   gender: Gender;
   age: number;
   net_worth: number;
-  anual_salary: number;
+  annual_salary: number;
   credit_card_debt: number;
   car_purchase_amount: number;
 }
