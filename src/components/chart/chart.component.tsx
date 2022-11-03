@@ -1,6 +1,8 @@
-import Plotly from "plotly.js-basic-dist-min";
-import { useEffect } from "react";
+import Plotly, { PlotlyHTMLElement } from "plotly.js-basic-dist-min";
+import { useEffect, useRef, useState } from "react";
 import { DataItem } from "src/types";
+import { SelectedPointInfoComponent } from "./selectedPointInfo.component";
+import {format} from "d3-format";
 
 interface Props {
   data: DataItem[];
@@ -11,9 +13,12 @@ interface Props {
  * @description Adaptable chart component. Reacts to data passed in props.
  */
 export function ChartComponent(props: Props) {
-  useEffect(() => {
+  const [selectedPointInfo, setSelectedPointInfo] = useState<string>("");
 
+  useEffect(() => {
     if (props.data.length > 0) {
+
+      const gd = document.getElementById("gd") as PlotlyHTMLElement;
 
       const x: any[] = [];
       const y: any[] = [];
@@ -37,14 +42,33 @@ export function ChartComponent(props: Props) {
           height: 500,
           yaxis: {
             rangemode: "tozero"
-          },
-          clickmode: "select"
+          }
         },
         { displayModeBar: false }
       );
+
+      gd?.on("plotly_click", (eventData: any) => {
+
+        const selectedPoint = eventData.points[0];
+
+        if (selectedPoint) {
+
+            const formatter = format('~s')
+            const value = formatter(selectedPoint.y);
+
+          const info = `${selectedPoint.x}: ${value}`;
+//          console.log(info);
+          setSelectedPointInfo(info);
+        }
+
+      });
+
     }
 
   }, [props.data]);
 
-  return <div id="gd"></div>;
+
+  return <div id="gd">
+    <SelectedPointInfoComponent info={selectedPointInfo} />
+  </div>;
 }
