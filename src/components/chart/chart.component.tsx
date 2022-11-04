@@ -1,8 +1,8 @@
 import Plotly, { PlotlyHTMLElement } from "plotly.js-basic-dist-min";
 import { useEffect, useState } from "react";
 import { DataItem } from "src/types";
-import { SelectedPointInfoComponent } from "./selectedPointInfo.component";
 import { format } from "d3-format";
+import { SelectedPointInfoComponent } from "./selectedPointInfo/selectedPointInfo.component";
 
 interface Props {
   data: DataItem[];
