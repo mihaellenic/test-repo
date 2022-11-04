@@ -1,8 +1,8 @@
 import Plotly, { PlotlyHTMLElement } from "plotly.js-basic-dist-min";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { DataItem } from "src/types";
 import { SelectedPointInfoComponent } from "./selectedPointInfo.component";
-import {format} from "d3-format";
+import { format } from "d3-format";
 
 interface Props {
   data: DataItem[];
@@ -38,8 +38,14 @@ export function ChartComponent(props: Props) {
         "gd",
         [trace],
         {
-          width: 800,
-          height: 500,
+          width: 600,
+          height: 400,
+          margin: {
+            t: 0,
+            b: 70,
+            l: 30,
+            r: 0
+          },
           yaxis: {
             rangemode: "tozero"
           }
@@ -52,12 +58,9 @@ export function ChartComponent(props: Props) {
         const selectedPoint = eventData.points[0];
 
         if (selectedPoint) {
-
-            const formatter = format('~s')
-            const value = formatter(selectedPoint.y);
-
+          const formatter = format("0.2s");
+          const value = formatter(selectedPoint.y);
           const info = `${selectedPoint.x}: ${value}`;
-//          console.log(info);
           setSelectedPointInfo(info);
         }
 

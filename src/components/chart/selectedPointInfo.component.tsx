@@ -7,8 +7,9 @@ interface Props {
 
 export function SelectedPointInfoComponent(props: Props) {
 
-    return <div className="selected-point">
-        <Typography>{props.info}</Typography>
-    </div>;
+  return <div className="selected-point-box">
+    <Typography>{props.info}</Typography>
+
+  </div>;
 
 }
