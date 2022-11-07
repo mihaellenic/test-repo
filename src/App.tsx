@@ -3,30 +3,43 @@ import { ChartComponent } from "./components/chart/chart.component";
 import { ChartControlsComponent } from "./components/chartControls/chartControls.component";
 import { useFetch } from "./hooks/useFetch.hook";
 import { useCustomTheme } from "./hooks/useCustomTheme.hook";
-import { Provider } from "react-redux";
-import { store } from "./store/store";
+import { Provider, useSelector } from "react-redux";
+import { AppState, store } from "./store/store";
+import { useProcessDataHook } from "./hooks/useProcessData.hook";
 
 function App() {
 
-  const { data } = useFetch("/Modelon_SkillTest_DataVisualization.csv");
+  console.log("App render");
 
+  const { data, error } = useFetch("/Modelon_SkillTest_DataVisualization.csv");
+
+  const countriesFilter = useSelector((state: AppState) => state.chartControls.countriesFilter);
+  const dataType = useSelector((state: AppState) => state.chartControls.dataType);
+
+  // create custom hook that will process the data
+  // processing includes aggregation and filtering
+  const { processedData, processingError } = useProcessDataHook(data, {
+    countriesFilter,
+    dataType,
+    aggregationType: "AVG"
+  });
+
+  console.log("processedData", processedData);
+
+  // todo: display error msgs
   return (
-    <Provider store={store}>
-      <CssVarsProvider theme={useCustomTheme()}>
-        <Grid container direction="row" spacing={1}>
-          <Grid>
-            <Card>
-              <ChartControlsComponent />
-            </Card>
-          </Grid>
-          <Grid>
-            <Card>
-              <ChartComponent data={data} />
-            </Card>
-          </Grid>
-        </Grid>
-      </CssVarsProvider>
-    </Provider>
+    <Grid container direction="row" spacing={1}>
+      <Grid>
+        <Card>
+          <ChartControlsComponent />
+        </Card>
+      </Grid>
+      <Grid>
+        <Card>
+          <ChartComponent data={processedData} />
+        </Card>
+      </Grid>
+    </Grid>
   );
 }
 

@@ -5,7 +5,7 @@ import { format } from "d3-format";
 import { SelectedPointInfoComponent } from "./selectedPointInfo/selectedPointInfo.component";
 
 interface Props {
-  data: DataItem[];
+  data: {x: string[], y: number[]};
 }
 
 /**
@@ -16,22 +16,15 @@ export function ChartComponent(props: Props) {
   const [selectedPointInfo, setSelectedPointInfo] = useState<string>("");
 
   useEffect(() => {
-    if (props.data.length > 0) {
+    if (props.data) {
 
       const gd = document.getElementById("gd") as PlotlyHTMLElement;
-
-      const x: any[] = [];
-      const y: any[] = [];
-      props.data.forEach((item: DataItem): any => {
-        x.push(item.country);
-        y.push(item.annual_salary);
-      });
 
       const trace: any = {
         type: "scatter",
         mode: "markers",
-        x,
-        y
+        x: props.data.x,
+        y: props.data.y
       };
 
       Plotly.newPlot(
