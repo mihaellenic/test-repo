@@ -7,7 +7,7 @@ const initialState: ChartControlsSliceState = {
 };
 
 export const chartControlsSlice = createSlice({
-  name: "chartControl",
+  name: "chartControls",
   initialState,
   reducers: {
     setCountriesFilter: (state, action: PayloadAction<CountriesFilter>) => {

@@ -1,32 +1,24 @@
-import { Card, CssVarsProvider, extendTheme, Grid } from "@mui/joy";
-import { ChartComponent } from "./components/chart/chart.component";
+import { Card, Grid } from "@mui/joy";
+import { ScatterPlotComponent } from "./components/chart/scatterPlotComponent";
 import { ChartControlsComponent } from "./components/chartControls/chartControls.component";
 import { useFetch } from "./hooks/useFetch.hook";
-import { useCustomTheme } from "./hooks/useCustomTheme.hook";
-import { Provider, useSelector } from "react-redux";
-import { AppState, store } from "./store/store";
-import { useProcessDataHook } from "./hooks/useProcessData.hook";
+import { useSelector } from "react-redux";
+import { AppState } from "./store/store";
+import { useProcessData } from "./hooks/useProcessData";
+import { DataType } from "./store/chartControls/types";
 
 function App() {
 
-  console.log("App render");
-
-  const { data, error } = useFetch("/Modelon_SkillTest_DataVisualization.csv");
+  const { data } = useFetch("/Modelon_SkillTest_DataVisualization.csv");
 
   const countriesFilter = useSelector((state: AppState) => state.chartControls.countriesFilter);
   const dataType = useSelector((state: AppState) => state.chartControls.dataType);
 
-  // create custom hook that will process the data
-  // processing includes aggregation and filtering
-  const { processedData, processingError } = useProcessDataHook(data, {
+  const { processedData } = useProcessData(data, {
     countriesFilter,
-    dataType,
-    aggregationType: "AVG"
+    dataType
   });
 
-  console.log("processedData", processedData);
-
-  // todo: display error msgs
   return (
     <Grid container direction="row" spacing={1}>
       <Grid>
@@ -36,7 +28,10 @@ function App() {
       </Grid>
       <Grid>
         <Card>
-          <ChartComponent data={processedData} />
+          <ScatterPlotComponent
+            data={processedData}
+            color={dataType === DataType.SALARIES ? "green" : "darkred"}
+          />
         </Card>
       </Grid>
     </Grid>
