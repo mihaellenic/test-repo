@@ -5,7 +5,7 @@ import { SelectedPointInfoComponent } from "./selectedPointInfo/selectedPointInf
 
 interface Props {
   data: { x: string[], y: number[] };
-  color: string;
+  color?: string;
 }
 
 /**
@@ -18,7 +18,7 @@ export function ScatterPlotComponent(props: Props) {
     const gd = document.getElementById("gd") as PlotlyHTMLElement;
 
     const trace: any = {
-      type: "scatter",
+      type: "scattergl",
       mode: "markers",
       x: props.data.x,
       y: props.data.y,
@@ -29,7 +29,11 @@ export function ScatterPlotComponent(props: Props) {
         type: "aggregate",
         groups: props.data.x,
         aggregations: [
-          { target: "y", func: "avg", enabled: true }
+          {
+            target: "y",
+            func: "avg",
+            enabled: true
+          }
         ]
       }]
     };

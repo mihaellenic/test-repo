@@ -11,13 +11,9 @@ function App() {
 
   const { data } = useFetch("/Modelon_SkillTest_DataVisualization.csv");
 
-  const countriesFilter = useSelector((state: AppState) => state.chartControls.countriesFilter);
-  const dataType = useSelector((state: AppState) => state.chartControls.dataType);
+  const chartControls = useSelector((state: AppState) => state.chartControls);
 
-  const { processedData } = useProcessData(data, {
-    countriesFilter,
-    dataType
-  });
+  const { processedData } = useProcessData(data, chartControls);
 
   return (
     <Grid container direction="row" spacing={1}>
@@ -30,7 +26,7 @@ function App() {
         <Card>
           <ScatterPlotComponent
             data={processedData}
-            color={dataType === DataType.SALARIES ? "green" : "darkred"}
+            color={chartControls.dataType === DataType.DEBT ? "darkorange" : undefined}
           />
         </Card>
       </Grid>

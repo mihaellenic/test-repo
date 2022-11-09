@@ -18,7 +18,6 @@ export function ChartControlsComponent() {
           Countries
         </FormLabel>
         <RadioGroup
-          aria-labelledby="countries-filter-label"
           value={countriesFilter}
           onChange={(event) => {
             const newCountriesFilter = event.target.value as CountriesFilter;
@@ -41,7 +40,6 @@ export function ChartControlsComponent() {
           Data
         </FormLabel>
         <RadioGroup
-          aria-labelledby="data-type-select"
           value={dataType}
           onChange={(event) => {
             const newDataType = event.target.value as DataType;
