@@ -4,13 +4,13 @@ import { ChartControlsComponent } from "./components/chartControls/chartControls
 import { useFetch } from "./hooks/useFetch.hook";
 import { useSelector } from "react-redux";
 import { AppState } from "./store/store";
-import { useProcessData } from "./hooks/useProcessData";
+import { useProcessData } from "./hooks/useProcessData.hook";
 import { DataType } from "./store/chartControls/types";
 
 function App() {
 
   const { data } = useFetch("/Modelon_SkillTest_DataVisualization.csv");
-
+  
   const chartControls = useSelector((state: AppState) => state.chartControls);
 
   const { processedData } = useProcessData(data, chartControls);

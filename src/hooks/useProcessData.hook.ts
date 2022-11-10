@@ -1,11 +1,6 @@
 import { DataItem } from "../types";
 import { ChartControlsSliceState, CountriesFilter, DataType } from "../store/chartControls/types";
 
-export interface DataProcesssingConfig {
-  countriesFilter: CountriesFilter;
-  dataType: DataType;
-}
-
 export function useProcessData(data: DataItem[], chartControls: ChartControlsSliceState) {
 
   const countryCharCodeStart: number = chartControls.countriesFilter.charCodeAt(0);

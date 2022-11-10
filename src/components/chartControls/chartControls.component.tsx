@@ -20,6 +20,7 @@ export function ChartControlsComponent() {
         <RadioGroup
           value={countriesFilter}
           onChange={(event) => {
+            console.log("countries filter click")
             const newCountriesFilter = event.target.value as CountriesFilter;
             dispatch(setCountriesFilter(newCountriesFilter));
           }}
@@ -27,6 +28,7 @@ export function ChartControlsComponent() {
           {Object.values(CountriesFilter).map((value) => (
             <Sheet key={value} sx={styles.radioSheet}>
               <Radio
+                data-testid="countries-filter-option"
                 label={value}
                 value={value}
                 sx={styles.radio}
@@ -49,6 +51,7 @@ export function ChartControlsComponent() {
           {Object.values(DataType).map((value) => (
             <Sheet key={value} sx={styles.radioSheet}>
               <Radio
+                data-testid="data-type-option"
                 label={value}
                 value={value}
                 sx={styles.radio}
